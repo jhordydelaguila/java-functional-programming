@@ -2,6 +2,7 @@ package imperative;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static imperative.Main.Gender.FEMALE;
@@ -34,8 +35,11 @@ public class Main {
 
         System.out.println("// Declarative approach");
         // Declarative approach
+
+        Predicate<Person> personPredicate = person -> FEMALE.equals(person.gender);
+
         List<Person> females2 = people.stream()
-                .filter(person -> FEMALE.equals(person.gender))
+                .filter(personPredicate)
                 .collect(Collectors.toList());
         females2.forEach(System.out::println);
     }
