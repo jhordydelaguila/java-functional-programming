@@ -2,13 +2,15 @@ package combinatorpattern;
 
 import java.time.LocalDate;
 
+import static combinatorpattern.CustomerRegistrationValidator.*;
+
 public class Main {
 
     public static void main(String[] args) {
         Customer customer = new Customer(
                 "Alex",
-                "Del Aguila",
-                "0+654545454",
+                "test@test.com",
+                "+0654545454",
                 LocalDate.of(2000, 1, 1)
         );
 
@@ -16,6 +18,17 @@ public class Main {
 
         // if valid we can store customer in db
 
+        // Using combinator pattern
+        ValidationResult result = isEmailValid()
+                .and(isPhoneNumberValid())
+                .and(isAdult())
+                .apply(customer);
+
+        System.out.println(result);
+
+        if (result != ValidationResult.SUCCESS) {
+            throw new IllegalStateException(result.name());
+        }
 
     }
 
